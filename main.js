@@ -9,7 +9,7 @@ fontLoader.load("./Comfortaa_Regular.json", (font) => {
   const textGeometry = new TextGeometry("COfffe, at last", {
     font: font,
     size: 0.2,
-    height: 0.01,
+    height: 0.05,
     curveSegments: 12,
     bevelEnabled: false,
     bevelThickness: 0.03,
@@ -40,6 +40,13 @@ scene.add(camera);
 // scene.add(axesHelper);
 
 //objects
+const panel = new THREE.Mesh(
+  new THREE.BoxGeometry(8, 2, 2),
+  new THREE.MeshLambertMaterial({ color: "#fbf2c0" })
+);
+panel.position.set(0, 0, -5);
+scene.add(panel);
+
 let bijou = undefined;
 loader.load("./bijou.glb", (gltf) => {
   gltf.scene.position.y = -1;
@@ -49,6 +56,35 @@ loader.load("./bijou.glb", (gltf) => {
   bijou = gltf.scene;
   scene.add(gltf.scene);
 });
+let boba = undefined;
+let bobas = [];
+loader.load("./boba.glb", (gltf) => {
+  boba = gltf.scene.children[0];
+  boba.material = new THREE.MeshLambertMaterial({ color: "#5E300E" });
+  boba.scale.set(25, 25, 25);
+
+  const particlesCount = 350;
+  for (let i = 1; i <= particlesCount; i++) {
+    const cloner = boba.clone();
+    bobas.push(cloner);
+    console.log(cloner);
+    cloner.position.set(
+      (Math.random() - 0.5) * 13,
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 20
+    );
+    cloner.rotation.set(
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 10
+    );
+    // cloner.scale.set(40, 40, 40);
+
+    scene.add(cloner);
+  }
+});
+
+// scene.add(particles);
 
 //lights
 var light = new THREE.PointLight("white", 300);
@@ -85,8 +121,15 @@ const tick = () => {
   if (texttext) {
     texttext.position.x += (-cursor.x - texttext.position.x) * deltaTime * 2;
     texttext.position.y += (cursor.y - texttext.position.y) * deltaTime * 2;
-  }
 
+    panel.position.x += (-cursor.x - panel.position.x) * deltaTime * 2;
+    panel.position.y += (cursor.y - panel.position.y) * deltaTime * 2;
+  }
+  boba &&
+    bobas.forEach((el) => {
+      el.rotation.x += Math.random() * 0.05;
+      el.rotation.y += Math.random() * 0.01;
+    });
   bijou && (bijou.rotation.y += 0.01);
   previousTime = elapsedTime;
   renderer.render(scene, camera);
