@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-
+//redeploy
 const fontLoader = new FontLoader();
 let texttext = undefined;
 fontLoader.load("./public/Comfortaa_Regular.json", (font) => {
