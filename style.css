@@ -1,18 +1,26 @@
-html, body {
+html,
+body {
   margin: 0;
   background-color: black;
 }
-.mainContainer { 
+.mainContainer {
   display: flex;
   justify-content: center;
 }
-.webgl { 
+.webgl {
   position: fixed;
 }
-.topContainer { 
+.topContainer {
   margin-top: 400px;
-  width: 80%;
+  width: 70%;
   height: 400px;
-  background-color: white;
+  background-color: #fbf2c0;
   border-radius: 15px;
+  box-shadow: 0px 0px 25px -10px #54494b;
+}
+.title {
+  font-size: 80px;
+  color: black;
+  text-align: right;
+  margin: 20px;
 }
