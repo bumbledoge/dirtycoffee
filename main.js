@@ -1,8 +1,28 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
+const fontLoader = new FontLoader();
+let texttext = undefined;
+fontLoader.load("./public/Comfortaa_Regular.json", (font) => {
+  const textGeometry = new TextGeometry("COfffe, at last", {
+    font: font,
+    size: 0.2,
+    height: 0.01,
+    curveSegments: 12,
+    bevelEnabled: false,
+    bevelThickness: 0.03,
+    bevelSize: 0.02,
+    bevelOffset: 0,
+    bevelSegments: 5,
+  });
+  const textMaterial = new THREE.MeshBasicMaterial({ color: "black" });
+  const text = new THREE.Mesh(textGeometry, textMaterial);
+  texttext = text;
+  scene.add(text);
+});
 const loader = new GLTFLoader();
-const axesHelper = new THREE.AxesHelper(30);
 const marimi = {
   height: window.innerHeight,
   width: window.innerWidth,
@@ -22,7 +42,6 @@ scene.add(camera);
 //objects
 let bijou = undefined;
 loader.load("./public/bijou.glb", (gltf) => {
-  console.log("done");
   gltf.scene.position.y = -1;
   gltf.scene.position.x = -1.5;
   gltf.scene.position.z = -1;
@@ -62,6 +81,11 @@ const tick = () => {
 
   camera.position.x += (-cursor.x - camera.position.x) * deltaTime;
   camera.position.y += (cursor.y - camera.position.y) * deltaTime;
+
+  if (texttext) {
+    texttext.position.x += (-cursor.x - texttext.position.x) * deltaTime * 2;
+    texttext.position.y += (cursor.y - texttext.position.y) * deltaTime * 2;
+  }
 
   bijou && (bijou.rotation.y += 0.01);
   previousTime = elapsedTime;
