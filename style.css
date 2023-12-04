@@ -2,3 +2,17 @@ html, body {
   margin: 0;
   background-color: black;
 }
+.mainContainer { 
+  display: flex;
+  justify-content: center;
+}
+.webgl { 
+  position: fixed;
+}
+.topContainer { 
+  margin-top: 400px;
+  width: 80%;
+  height: 400px;
+  background-color: white;
+  border-radius: 15px;
+}
