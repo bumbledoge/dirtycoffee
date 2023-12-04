@@ -2,10 +2,10 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-//redeploy
+
 const fontLoader = new FontLoader();
 let texttext = undefined;
-fontLoader.load("./public/Comfortaa_Regular.json", (font) => {
+fontLoader.load("./Comfortaa_Regular.json", (font) => {
   const textGeometry = new TextGeometry("COfffe, at last", {
     font: font,
     size: 0.2,
@@ -41,7 +41,7 @@ scene.add(camera);
 
 //objects
 let bijou = undefined;
-loader.load("./public/bijou.glb", (gltf) => {
+loader.load("./bijou.glb", (gltf) => {
   gltf.scene.position.y = -1;
   gltf.scene.position.x = -1.5;
   gltf.scene.position.z = -1;
