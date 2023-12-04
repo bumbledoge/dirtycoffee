@@ -1,7 +1,7 @@
 html,
 body {
   margin: 0;
-  background-color: black;
+  background-color: "#E1BB80";
 }
 .mainContainer {
   display: flex;
@@ -13,7 +13,7 @@ body {
 .topContainer {
   margin-top: 400px;
   width: 70%;
-  height: 400px;
+  height: 200px;
   background-color: #fbf2c0;
   border-radius: 15px;
   box-shadow: 0px 0px 25px -10px #54494b;
@@ -22,5 +22,5 @@ body {
   font-size: 80px;
   color: black;
   text-align: right;
-  margin: 20px;
+  margin: 50px;
 }
