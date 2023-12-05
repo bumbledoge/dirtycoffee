@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
 
 const fontLoader = new FontLoader();
 let texttext = undefined,
@@ -70,16 +72,31 @@ loader.load("./bijou.glb", (gltf) => {
   gltf.scene.position.z = -1;
   gltf.scene.rotation.x = Math.PI / 6;
   bijou = gltf.scene;
-  scene.add(gltf.scene);
+  // scene.add(gltf.scene);
 });
 let boba = undefined;
+
+const objLoader = new GLTFLoader();
+let poharGeo = undefined;
+const poharPosition = new THREE.Vector3(-2, -1.2, 0);
+objLoader.load("./onlinePahar.glb", (obj) => {
+  obj.scene.scale.setScalar(0.25);
+  obj.scene.position.x = -2;
+  obj.scene.position.y = -1.2;
+
+  obj.scene.rotation.x = Math.PI / 6;
+
+  poharGeo = obj.scene;
+  scene.add(obj.scene);
+});
+
 let bobas = [];
 loader.load("./boba.glb", (gltf) => {
   boba = gltf.scene.children[0];
   boba.material = new THREE.MeshLambertMaterial({ color: "#5E300E" });
   boba.scale.set(25, 25, 25);
 
-  const particlesCount = 350;
+  const particlesCount = 450;
   for (let i = 1; i <= particlesCount; i++) {
     const cloner = boba.clone();
     bobas.push(cloner);
@@ -93,13 +110,10 @@ loader.load("./boba.glb", (gltf) => {
       (Math.random() - 0.5) * 10,
       (Math.random() - 0.5) * 10
     );
-    // cloner.scale.set(40, 40, 40);
-
-    scene.add(cloner);
+    console.log(cloner.position.distanceTo(poharPosition));
+    if (cloner.position.distanceTo(poharPosition) > 4) scene.add(cloner);
   }
 });
-
-// scene.add(particles);
 
 //lights
 var light = new THREE.PointLight("white", 300);
@@ -150,6 +164,7 @@ const tick = () => {
       el.rotation.y += Math.random() * 0.01;
     });
   bijou && (bijou.rotation.y += deltaTime);
+  poharGeo && (poharGeo.rotation.y += deltaTime);
   previousTime = elapsedTime;
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
