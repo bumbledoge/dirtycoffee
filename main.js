@@ -6,7 +6,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 const fontLoader = new FontLoader();
 let texttext = undefined;
 fontLoader.load("./Comfortaa_Regular.json", (font) => {
-  const textGeometry = new TextGeometry("COfffe, at last", {
+  const textGeometry = new TextGeometry("Coffee, at last", {
     font: font,
     size: 0.2,
     height: 0.05,
