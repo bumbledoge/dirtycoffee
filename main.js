@@ -4,7 +4,8 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 const fontLoader = new FontLoader();
-let texttext = undefined;
+let texttext = undefined,
+  ciaoText = undefined;
 fontLoader.load("./Comfortaa_Regular.json", (font) => {
   const textGeometry = new TextGeometry("Coffee, at last", {
     font: font,
@@ -17,11 +18,26 @@ fontLoader.load("./Comfortaa_Regular.json", (font) => {
     bevelOffset: 0,
     bevelSegments: 5,
   });
+  const ciaoTextGeometry = new TextGeometry("Ciao", {
+    font: font,
+    size: 2,
+    height: 0.05,
+    curveSegments: 12,
+    bevelEnabled: false,
+    bevelThickness: 0.03,
+    bevelSize: 0.02,
+    bevelOffset: 0,
+    bevelSegments: 5,
+  });
   const textMaterial = new THREE.MeshBasicMaterial({ color: "black" });
   const text = new THREE.Mesh(textGeometry, textMaterial);
+  ciaoText = new THREE.Mesh(ciaoTextGeometry, textMaterial);
+  ciaoText.position.set(0, -10, -10);
   texttext = text;
-  scene.add(text);
+  scene.add(text, ciaoText);
 });
+
+// setup
 const loader = new GLTFLoader();
 const marimi = {
   height: window.innerHeight,
@@ -35,7 +51,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(0, 0, 8);
+camera.position.set(0, -20, 8);
 scene.add(camera);
 // scene.add(axesHelper);
 
@@ -67,7 +83,6 @@ loader.load("./boba.glb", (gltf) => {
   for (let i = 1; i <= particlesCount; i++) {
     const cloner = boba.clone();
     bobas.push(cloner);
-    console.log(cloner);
     cloner.position.set(
       (Math.random() - 0.5) * 13,
       (Math.random() - 0.5) * 10,
@@ -93,7 +108,11 @@ light.position.set(-2, 4, 5);
 // light1.position.set(3, 0, -2);
 scene.add(light, light1);
 
-const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  alpha: true,
+  antialias: true,
+});
 renderer.setSize(marimi.width, marimi.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // renderer.outputColorSpace = THREE.SRGBColorSpace;
