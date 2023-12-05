@@ -96,7 +96,7 @@ scene.add(light, light1);
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
 renderer.setSize(marimi.width, marimi.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.outputColorSpace = THREE.SRGBColorSpace;
+// renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.render(scene, camera);
 
 //animations
@@ -130,7 +130,7 @@ const tick = () => {
       el.rotation.x += Math.random() * 0.05;
       el.rotation.y += Math.random() * 0.01;
     });
-  bijou && (bijou.rotation.y += 0.01);
+  bijou && (bijou.rotation.y += deltaTime);
   previousTime = elapsedTime;
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
